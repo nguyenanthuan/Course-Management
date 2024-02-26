@@ -9,15 +9,18 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author ADMIN
  */
 public class CourseDAL extends MyDatabaseManager{
+    
     public CourseDAL() {
         CourseDAL.connectDB();
     }
+    
     public ArrayList readCourse() throws SQLException {
         String query = "SELECT * FROM Course";
         ResultSet rs = CourseDAL.doReadQuery(query);
@@ -35,6 +38,7 @@ public class CourseDAL extends MyDatabaseManager{
         }
         return list;
     }
+    
     public int insertCourse(Course c) throws SQLException {
         String query = "Insert Course (CourseId, Title, Credits, DepartmentID) VALUES (?, ?, ?, ?)";
         PreparedStatement p = CourseDAL.getConnection().prepareStatement(query);
@@ -45,5 +49,59 @@ public class CourseDAL extends MyDatabaseManager{
         int result = p.executeUpdate();
         return result;
     }
-    //test
+    
+    public Course getCourse(int courseId) throws SQLException {
+        String query = "SELECT * FROM Course WHERE CourseID = ? ";
+        PreparedStatement p = CourseDAL.getConnection().prepareStatement(query);
+        p.setInt(1, courseId);
+        ResultSet rs = p.executeQuery();
+        Course c = new Course();
+        if (rs != null) {
+            while (rs.next()) {
+                c.setCourseId(rs.getInt("CourseID"));
+                c.setTitle(rs.getString("Title"));
+                c.setCredits(rs.getInt("Credits"));
+                c.setDepartmentId(rs.getInt("DepartmentID"));
+            }
+        }
+        return c;
+    }
+
+    public int updateCourse(Course c) throws SQLException {
+        String query = "Update Course SET Title = ?, DepartmentID = ? "
+                + " WHERE CourseID = ?";
+        PreparedStatement p = CourseDAL.getConnection().prepareStatement(query);
+        p.setString(1, c.getTitle());
+        p.setInt(3, c.getCourseId());
+        p.setInt(3, c.getDepartmentId());
+        int result = p.executeUpdate();
+        return result;
+    }
+    
+    public List findStudents(String title) throws SQLException {
+        String query = "SELECT * FROM Person WHERE concat(Title) LIKE ?";
+        PreparedStatement p = CourseDAL.getConnection().prepareStatement(query);
+        p.setString(1, "%" + title + "%");
+        ResultSet rs = p.executeQuery();
+        List list = new ArrayList();
+        if (rs != null) {
+            while (rs.next()) {
+                Course c = new Course();
+                c.setCourseId(rs.getInt("CourseID"));
+                c.setTitle(rs.getString("Title"));
+                c.setCredits(rs.getInt("Credits"));
+                c.setDepartmentId(rs.getInt("DepartmentID"));
+                list.add(c);
+            }
+        }
+        return list;
+    }
+
+    public int deleteCousre(int courseID) throws SQLException {
+        String query = "DELETE FROM Course WHERE CourseID = ?";
+        PreparedStatement p = CourseDAL.getConnection().prepareStatement(query);
+        p.setInt(1, courseID);
+        int result = p.executeUpdate();
+        return result;
+    }
 }
