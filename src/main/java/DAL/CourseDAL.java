@@ -45,4 +45,5 @@ public class CourseDAL extends MyDatabaseManager{
         int result = p.executeUpdate();
         return result;
     }
+    //test
 }
