@@ -49,6 +49,7 @@ public class CourseDAL extends MyDatabaseManager{
         int result = p.executeUpdate();
         return result;
     }
+
     
     public Course getCourse(int courseId) throws SQLException {
         String query = "SELECT * FROM Course WHERE CourseID = ? ";
