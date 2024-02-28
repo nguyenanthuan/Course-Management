@@ -21,7 +21,7 @@ public class CourseBLL {
     public CourseBLL() {
         couDal = new CourseDAL();
     }
-      public List LoadCourses(int page) throws SQLException {
+    public List LoadCourses(int page) throws SQLException {
         int numofrecords = 30;
         ArrayList list = couDal.readCourse();
         int size = list.size();

@@ -57,5 +57,9 @@ public class Department {
         this.administrator = administrator;
     }
     
+    @Override
+    public String toString() {
+        return name;
+    }
     
 }
