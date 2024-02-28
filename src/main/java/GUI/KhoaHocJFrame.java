@@ -5,7 +5,13 @@
 package GUI;
 
 import BLL.CourseBLL;
+import BLL.DepartmentBLL;
+import BLL.OnlineCourseBLL;
+import BLL.OnsiteCourseBLL;
 import DTO.Course;
+import DTO.Department;
+import DTO.OnlineCourse;
+import DTO.OnsiteCourse;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
@@ -22,7 +28,9 @@ public class KhoaHocJFrame extends javax.swing.JFrame {
      * Creates new form KhoaHocJFrame
      */
     CourseBLL cou = new CourseBLL();
-    
+    OnlineCourseBLL olcBll = new OnlineCourseBLL();
+    OnsiteCourseBLL oscBll = new OnsiteCourseBLL();
+    DepartmentBLL dpmBLL = new DepartmentBLL();
     KhoaHocJFrame() {
         initComponents();
         try {
@@ -31,23 +39,51 @@ public class KhoaHocJFrame extends javax.swing.JFrame {
             Logger.getLogger(KhoaHocJFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-     private void listCourse() throws SQLException {
+    private void listCourse() throws SQLException {
         List list = cou.LoadCourses(1);
         DefaultTableModel model = convertStudent(list);
-        jTbCourse.setModel(model);
+//        jtbOnsiteCour.setModel(model);
 //        lbStatus.setText("Num of rows: " + list.size());
     }
     
     private DefaultTableModel convertStudent(List list) {
-        String[] columnNames = {"STT", "Mã khóa học", "Tên khóa học", "Credits", "Mã tòa nhà"};
-        Object[][] data = new Object[list.size()][5];
+        String[] columnNames = {"STT", "Mã khóa học", "Tên khóa học", "Tín chỉ", 
+            "Loại khóa học", "Khóa online/onsite"};
+        Object[][] data = new Object[list.size()][6];
+        OnlineCourse olc = new OnlineCourse();
+        OnsiteCourse osc = new OnsiteCourse();
+        Department dpm = new Department();
         for (int i = 0; i < list.size(); i++) {
             Course c = (Course) list.get(i);
-            data[i][0] = i + 1;
+            data[i][0] = i + 1; 
             data[i][1] = c.getCourseId();
             data[i][2] = c.getTitle();
             data[i][3] = c.getCredits();
-            data[i][4] = c.getDepartmentId();
+            
+            try {
+                dpm = dpmBLL.getDepartment(c.getDepartmentId());
+                olc = olcBll.getOnlineCourse(c.getCourseId());
+                if (olc == null) {
+                    osc = oscBll.getOnsiteCourse(c.getCourseId());
+                }   
+            } catch (SQLException ex) {
+                Logger.getLogger(KhoaHocJFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if(dpm != null) {
+                data[i][4] = dpm.getName();
+            }
+            else {
+                data[i][4] = "Khóa chưa chọn ngành học";
+            }
+            if(olc != null) {
+                data[i][5] = "Khóa online";
+            }
+            else if(osc != null) {
+                data[i][5] = "Khóa onsite";
+            }
+            else {
+                data[i][5] = "Khóa học chưa có thông tin";
+            }
         }
         DefaultTableModel model = new DefaultTableModel(data, columnNames);
         return model;
@@ -71,7 +107,7 @@ public class KhoaHocJFrame extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jcbCourse = new javax.swing.JComboBox<>();
+        jcbDepartment = new javax.swing.JComboBox<>();
         jPanel4 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
@@ -95,10 +131,10 @@ public class KhoaHocJFrame extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setText("Loại khóa học:");
 
-        jcbCourse.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jcbCourse.addActionListener(new java.awt.event.ActionListener() {
+        jcbDepartment.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcbDepartment.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcbCourseActionPerformed(evt);
+                jcbDepartmentActionPerformed(evt);
             }
         });
 
@@ -110,7 +146,7 @@ public class KhoaHocJFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jcbCourse, 0, 179, Short.MAX_VALUE)
+                .addComponent(jcbDepartment, 0, 179, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -119,7 +155,7 @@ public class KhoaHocJFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jcbCourse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jcbDepartment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -237,7 +273,7 @@ public class KhoaHocJFrame extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -245,8 +281,7 @@ public class KhoaHocJFrame extends javax.swing.JFrame {
                         .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 448, Short.MAX_VALUE))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -294,7 +329,7 @@ public class KhoaHocJFrame extends javax.swing.JFrame {
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 909, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel10Layout.setVerticalGroup(
@@ -326,7 +361,8 @@ public class KhoaHocJFrame extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -351,9 +387,9 @@ public class KhoaHocJFrame extends javax.swing.JFrame {
         // DO add your handling code here:
     }//GEN-LAST:event_jTextField3ActionPerformed
 
-    private void jcbCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbCourseActionPerformed
+    private void jcbDepartmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbDepartmentActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jcbCourseActionPerformed
+    }//GEN-LAST:event_jcbDepartmentActionPerformed
 
     /**
      * @param args the command line arguments
@@ -410,7 +446,7 @@ public class KhoaHocJFrame extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
-    private javax.swing.JComboBox<String> jcbCourse;
     private javax.swing.JComboBox<String> jcbCourse4;
+    private javax.swing.JComboBox<String> jcbDepartment;
     // End of variables declaration//GEN-END:variables
 }
