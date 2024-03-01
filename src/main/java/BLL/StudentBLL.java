@@ -53,16 +53,16 @@ public class StudentBLL {
         return result;
     }
 
-    public static void main(String[] args) {
-        try {
-            StudentBLL stdBll = new StudentBLL();
-            List data = stdBll.LoadStudents(1);
-            Student s = (Student) data.get(0);
-            System.out.println(s.getFirstName());
-            System.out.println("Nothing");
-
-        } catch (SQLException ex) {
-            Logger.getLogger(StudentBLL.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+//    public static void main(String[] args) {
+//        try {
+//            StudentBLL stdBll = new StudentBLL();
+//            List data = stdBll.LoadStudents(1);
+//            Student s = (Student) data.get(0);
+//            System.out.println(s.getFirstName());
+//            System.out.println("Nothing");
+//
+//        } catch (SQLException ex) {
+//            Logger.getLogger(StudentBLL.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
 }

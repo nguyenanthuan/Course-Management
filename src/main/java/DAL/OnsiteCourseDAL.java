@@ -66,16 +66,17 @@ public class OnsiteCourseDAL extends MyDatabaseManager{
         return osc;
     }
 
-//    public int updateOnlineCourse(OnlineCourse c) throws SQLException {
-//        String query = "Update Course SET Title = ?, DepartmentID = ? "
-//                + " WHERE CourseID = ?";
-//        PreparedStatement p = CourseDAL.getConnection().prepareStatement(query);
-//        p.setString(1, c.getTitle());
-//        p.setInt(3, c.getCourseId());
-//        p.setInt(3, c.getDepartmentId());
-//        int result = p.executeUpdate();
-//        return result;
-//    }
+    public int updateOnsiteCourse(OnsiteCourse c) throws SQLException {
+        String query = "Update OnsiteCourse SET Location = ?, Days = ?, Time = ? "
+                + " WHERE CourseID = ?";
+        PreparedStatement p = CourseDAL.getConnection().prepareStatement(query);
+        p.setString(1, c.getLocation());
+        p.setString(2, c.getDays());
+        p.setTime(3, c.getTime());
+        p.setInt(4, c.getCourseID());
+        int result = p.executeUpdate();
+        return result;
+    }
     
 //    public List findOnlineCourse(String courseId) throws SQLException {
 //        String query = "SELECT * FROM OnlineCourse WHERE concat(CourseId) LIKE ?";
@@ -96,7 +97,7 @@ public class OnsiteCourseDAL extends MyDatabaseManager{
 //        return list;
 //    }
 
-    public int deleteCousre(int courseID) throws SQLException {
+    public int deleteCourse(int courseID) throws SQLException {
         String query = "DELETE FROM OnsiteCourse WHERE CourseID = ?";
         PreparedStatement p = OnsiteCourseDAL.getConnection().prepareStatement(query);
         p.setInt(1, courseID);

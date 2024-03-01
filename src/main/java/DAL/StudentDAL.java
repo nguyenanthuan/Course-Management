@@ -159,81 +159,79 @@ public class StudentDAL extends MyDatabaseManager{
         return result;
     }
 
-    public static void main(String[] args) {
-
-        Scanner in = new Scanner(System.in);
-        int choice = 1;
-        System.out.println("Quan ly thong tin sinh vien:");
-        System.out.println("----------------------------");
-        //System.out.print("Enter 0: Exits; \t    1: List ; \t 2: Insert ; \t 3: Update  \t 4: Delete \t5. Find: ");
-        try {
-
-            StudentDAL s = new StudentDAL();
-
-            Student st = new Student();
-            while (choice > 0) {
-                System.out.println("Enter 0: Exits; \t1: List ; \t 2: Insert ; \t 3: Update\t 4: Delete \t5. Find: ");
-                choice = Integer.parseInt(in.nextLine());
-                switch (choice) {
-                    case 1 ->
-                        s.readStudents();
-                    case 2 -> {
-                        System.out.println("Firstname: ");
-                        String firstName = in.nextLine();
-                        System.out.println("Lastname: ");
-                        String lastName = in.nextLine();
-                        st.setLastName(lastName);
-                        st.setFirstName(firstName);
-                        long millis = System.currentTimeMillis();
-                        java.sql.Date date = new java.sql.Date(millis);
-                        st.setEnrollmentDate(date);
-                        if (s.insertStudent(st) != 0) {
-                            System.out.println("Complete insert ");
-                        } else {
-                            System.out.println("Nothing insert ");
-                        }
-                    }
-                    case 3 -> {
-                        System.out.println("Enter PersonID to Update: ");
-                        int personID = Integer.parseInt(in.nextLine());
-                        st.setPersonId(personID);
-                        System.out.println("Firstname: ");
-                        String firstName2 = in.nextLine();
-                        System.out.println("Lastname: ");
-                        String lastName2 = in.nextLine();
-                        st.setLastName(lastName2);
-                        st.setFirstName(firstName2);
-                        if (s.updateStudent(st) != 0) {
-                            System.out.println("Complete update");
-                        } else {
-                            System.out.println("Complete update");
-                        }
-                    }
-                    case 4 -> {
-                        System.out.println("Enter PersonID to delete: ");
-                        int personID = Integer.parseInt(in.nextLine());
-                        if (s.deleteStudent(personID) != 0) {
-                            System.out.println("Complete delete");
-                        } else {
-                            System.out.println("Nothing delete");
-
-                        }
-                    }
-                    case 5 -> {
-                        System.out.println("Enter fullname to search: ");
-
-                        String fullName = in.nextLine();
-                        s.findStudent(fullName);
-                    }
-                    default ->
-                        System.out.println("Enter number not match");
-                }
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(StudentDAL.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    
+//    public static void main(String[] args) {
+//
+//        Scanner in = new Scanner(System.in);
+//        int choice = 1;
+//        System.out.println("Quan ly thong tin sinh vien:");
+//        System.out.println("----------------------------");
+//        //System.out.print("Enter 0: Exits; \t    1: List ; \t 2: Insert ; \t 3: Update  \t 4: Delete \t5. Find: ");
+//        try {
+//
+//            StudentDAL s = new StudentDAL();
+//
+//            Student st = new Student();
+//            while (choice > 0) {
+//                System.out.println("Enter 0: Exits; \t1: List ; \t 2: Insert ; \t 3: Update\t 4: Delete \t5. Find: ");
+//                choice = Integer.parseInt(in.nextLine());
+//                switch (choice) {
+//                    case 1 ->
+//                        s.readStudents();
+//                    case 2 -> {
+//                        System.out.println("Firstname: ");
+//                        String firstName = in.nextLine();
+//                        System.out.println("Lastname: ");
+//                        String lastName = in.nextLine();
+//                        st.setLastName(lastName);
+//                        st.setFirstName(firstName);
+//                        long millis = System.currentTimeMillis();
+//                        java.sql.Date date = new java.sql.Date(millis);
+//                        st.setEnrollmentDate(date);
+//                        if (s.insertStudent(st) != 0) {
+//                            System.out.println("Complete insert ");
+//                        } else {
+//                            System.out.println("Nothing insert ");
+//                        }
+//                    }
+//                    case 3 -> {
+//                        System.out.println("Enter PersonID to Update: ");
+//                        int personID = Integer.parseInt(in.nextLine());
+//                        st.setPersonId(personID);
+//                        System.out.println("Firstname: ");
+//                        String firstName2 = in.nextLine();
+//                        System.out.println("Lastname: ");
+//                        String lastName2 = in.nextLine();
+//                        st.setLastName(lastName2);
+//                        st.setFirstName(firstName2);
+//                        if (s.updateStudent(st) != 0) {
+//                            System.out.println("Complete update");
+//                        } else {
+//                            System.out.println("Complete update");
+//                        }
+//                    }
+//                    case 4 -> {
+//                        System.out.println("Enter PersonID to delete: ");
+//                        int personID = Integer.parseInt(in.nextLine());
+//                        if (s.deleteStudent(personID) != 0) {
+//                            System.out.println("Complete delete");
+//                        } else {
+//                            System.out.println("Nothing delete");
+//
+//                        }
+//                    }
+//                    case 5 -> {
+//                        System.out.println("Enter fullname to search: ");
+//
+//                        String fullName = in.nextLine();
+//                        s.findStudent(fullName);
+//                    }
+//                    default ->
+//                        System.out.println("Enter number not match");
+//                }
+//            }
+//
+//        } catch (SQLException ex) {
+//            Logger.getLogger(StudentDAL.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
 }

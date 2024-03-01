@@ -60,16 +60,15 @@ public class OnlineCourseDAL extends MyDatabaseManager{
         return oc;
     }
 
-//    public int updateOnlineCourse(OnlineCourse c) throws SQLException {
-//        String query = "Update Course SET Title = ?, DepartmentID = ? "
-//                + " WHERE CourseID = ?";
-//        PreparedStatement p = CourseDAL.getConnection().prepareStatement(query);
-//        p.setString(1, c.getTitle());
-//        p.setInt(3, c.getCourseId());
-//        p.setInt(3, c.getDepartmentId());
-//        int result = p.executeUpdate();
-//        return result;
-//    }
+    public int updateOnlineCourse(OnlineCourse c) throws SQLException {
+        String query = "Update OnlineCourse SET url = ? "
+                + " WHERE CourseID = ?";
+        PreparedStatement p = CourseDAL.getConnection().prepareStatement(query);
+        p.setString(1, c.getUrl());
+        p.setInt(2, c.getCourseId());
+        int result = p.executeUpdate();
+        return result;
+    }
     
 //    public List findOnlineCourse(String courseId) throws SQLException {
 //        String query = "SELECT * FROM OnlineCourse WHERE concat(CourseId) LIKE ?";
@@ -90,7 +89,7 @@ public class OnlineCourseDAL extends MyDatabaseManager{
 //        return list;
 //    }
 
-    public int deleteCousre(int courseID) throws SQLException {
+    public int deleteCourse(int courseID) throws SQLException {
         String query = "DELETE FROM OnlineCourse WHERE CourseID = ?";
         PreparedStatement p = CourseDAL.getConnection().prepareStatement(query);
         p.setInt(1, courseID);

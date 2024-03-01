@@ -5,11 +5,15 @@
 package BLL;
 
 import DAL.CourseDAL;
-import DTO.Course;
+import DTO.*;
+import GUI.CourseForm;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -47,4 +51,40 @@ public class CourseBLL {
         return result;
     }
     
+    public List searchCoursebyDepartment(Department dpm, List lstcou) { 
+        if(dpm != null) {
+            for(int i = 0; i < lstcou.size(); i++) {
+                Course cour = (Course) lstcou.get(i);
+                if(dpm.getDepartmentID() != cour.getDepartmentId()) {
+                     lstcou.remove(i);
+                }
+            }
+        }
+        return lstcou;
+    } 
+    
+    public int generateCourseID() throws SQLException {
+        boolean check = false;
+        int id = 0;
+        while(!check) {
+            Random random = new Random();
+            int ranId = random.nextInt(9000) + 1000;
+            Course c = getCourse(ranId);
+            if(c == null) {
+                id = ranId;
+                check = true;
+            }
+        }
+        return id;
+    } 
+    
+    public int removeCourse(int id) throws SQLException {
+        int result = couDal.deleteCourse(id);
+        return result;
+    }
+    
+    public int updateCourse(Course c) throws SQLException {
+        int result = couDal.updateCourse(c);
+        return result;
+    }
 }

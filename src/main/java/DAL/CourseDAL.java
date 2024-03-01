@@ -55,9 +55,10 @@ public class CourseDAL extends MyDatabaseManager{
         PreparedStatement p = CourseDAL.getConnection().prepareStatement(query);
         p.setInt(1, courseId);
         ResultSet rs = p.executeQuery();
-        Course c = new Course();
+        Course c = null;
         if (rs != null) {
             while (rs.next()) {
+                c = new Course();
                 c.setCourseId(rs.getInt("CourseID"));
                 c.setTitle(rs.getString("Title"));
                 c.setCredits(rs.getInt("Credits"));
@@ -68,12 +69,11 @@ public class CourseDAL extends MyDatabaseManager{
     }
 
     public int updateCourse(Course c) throws SQLException {
-        String query = "Update Course SET Title = ?, DepartmentID = ? "
+        String query = "Update Course SET Title = ?"
                 + " WHERE CourseID = ?";
         PreparedStatement p = CourseDAL.getConnection().prepareStatement(query);
         p.setString(1, c.getTitle());
-        p.setInt(3, c.getCourseId());
-        p.setInt(3, c.getDepartmentId());
+        p.setInt(2, c.getCourseId());
         int result = p.executeUpdate();
         return result;
     }
@@ -97,7 +97,7 @@ public class CourseDAL extends MyDatabaseManager{
         return list;
     }
 
-    public int deleteCousre(int courseID) throws SQLException {
+    public int deleteCourse(int courseID) throws SQLException {
         String query = "DELETE FROM Course WHERE CourseID = ?";
         PreparedStatement p = CourseDAL.getConnection().prepareStatement(query);
         p.setInt(1, courseID);

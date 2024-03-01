@@ -46,4 +46,15 @@ public class OnlineCourseBLL {
         int result = olcdal.insertOnlineCourse(olc);
         return result;
     }
+    
+    public int removeCourse(int id) throws SQLException {
+        int result = olcdal.deleteCourse(id);
+        return result;
+    }
+    
+    public int updateCourse(OnlineCourse c) throws SQLException {
+        int result = olcdal.updateOnlineCourse(c);
+        return result;
+    }
+    
 }

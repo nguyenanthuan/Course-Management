@@ -46,4 +46,13 @@ public class OnsiteCourseBLL {
         int result = oscdal.insertOnsiteCourse(osc);
         return result;
     }
+    public int removeCourse(int id) throws SQLException {
+        int result = oscdal.deleteCourse(id);
+        return result;
+    }
+    
+    public int updateCourse(OnsiteCourse c) throws SQLException {
+        int result = oscdal.updateOnsiteCourse(c);
+        return result;
+    }
 }
