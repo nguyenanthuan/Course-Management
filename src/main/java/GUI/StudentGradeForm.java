@@ -20,18 +20,18 @@ import javax.swing.table.TableModel;
  *
  * @author ACER
  */
-public class MainForm extends javax.swing.JFrame {
+public class StudentGradeForm extends javax.swing.JFrame {
     StudentGradeBLL std=new StudentGradeBLL();
     StudentGrade sg;
     /**
      * Creates new form MainForm
      */
-    public MainForm() {
+    public StudentGradeForm() {
         initComponents();
         try {
             listStudentGrade();
         } catch (SQLException ex){
-            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(StudentGradeForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -45,8 +45,6 @@ public class MainForm extends javax.swing.JFrame {
     private void initComponents() {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         tfStudentID = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -70,32 +68,6 @@ public class MainForm extends javax.swing.JFrame {
         jTabbedPane1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jTabbedPane1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTabbedPane1.setOpaque(true);
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        jTabbedPane1.addTab("ONLINE, ONSITE COURSE", jPanel1);
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        jTabbedPane1.addTab("COURSE INSTRUCTOR", jPanel2);
 
         tfStudentID.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tfStudentID.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
@@ -288,7 +260,7 @@ public class MainForm extends javax.swing.JFrame {
         try {
             listStudentGrade();
         } catch (SQLException ex) {
-            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(StudentGradeForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnLoadMouseClicked
 
@@ -299,7 +271,7 @@ public class MainForm extends javax.swing.JFrame {
             addform.setVisible(true);
             listStudentGrade(); // Refresh the table
         } catch (SQLException ex) {
-            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(StudentGradeForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnAddMouseClicked
 
@@ -316,7 +288,7 @@ public class MainForm extends javax.swing.JFrame {
             f.setVisible(true);
             listStudentGrade(); // Refresh the table
         } catch (SQLException ex) {
-            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(StudentGradeForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnUpdateMouseClicked
 
@@ -338,7 +310,7 @@ public class MainForm extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, "Failed to delete the record", "Message", JOptionPane.ERROR_MESSAGE);
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(StudentGradeForm.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_btnDeleteMouseClicked
@@ -355,7 +327,7 @@ public class MainForm extends javax.swing.JFrame {
                 listStudentGrade();
             }
         } catch (SQLException ex) {
-            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(StudentGradeForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_tfFindActionPerformed
 
@@ -376,21 +348,23 @@ public class MainForm extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(StudentGradeForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(StudentGradeForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(StudentGradeForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(StudentGradeForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainForm().setVisible(true);
+                new StudentGradeForm().setVisible(true);
             }
         });
     }
@@ -405,8 +379,6 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
@@ -462,7 +434,7 @@ public class MainForm extends javax.swing.JFrame {
             // Additional fields can be populated here
 
         } catch (SQLException ex) {
-            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(StudentGradeForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
